@@ -24,7 +24,15 @@ loadReports();
 initMap();
 renderReports();
 enableShare();
+function safeGetLocation() {
+  // PWA FIX: musi być aktywna karta
+  if (document.visibilityState !== 'visible') {
+    console.warn('App not focused - GPS blocked');
+    return;
+  }
 
+  getLocation();
+}
 // =====================
 // MAPA STARTOWA
 // =====================
@@ -75,7 +83,10 @@ cameraInput.addEventListener('change', (event) => {
     enableShare();
 
     // pobierz GPS
-    getLocation();
+      setTimeout(() => {
+    safeGetLocation();
+  }, 300);
+
 });
 const charCounter = document.getElementById('char-counter');
 const MAX_CHARS = 300;
