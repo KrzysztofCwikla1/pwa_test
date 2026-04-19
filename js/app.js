@@ -81,8 +81,12 @@ const charCounter = document.getElementById('char-counter');
 const MAX_CHARS = 300;
 reportText.addEventListener('input', (event) => {
   currentReportText = event.target.value.trim();
+
   const length = event.target.value.length;
+
   charCounter.textContent = `${length} / ${MAX_CHARS}`;
+
+  // kolorowanie zależnie od limitu
   if (length > 270) {
     charCounter.classList.add('text-danger');
     charCounter.classList.remove('text-muted');
@@ -93,7 +97,6 @@ reportText.addEventListener('input', (event) => {
 
   enableShare();
 });
-
 //geolokalizacja
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
