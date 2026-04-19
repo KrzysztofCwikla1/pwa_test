@@ -19,7 +19,8 @@ const photoPreview = document.getElementById('photo-preview');
 const locationStatus = document.getElementById('location-status');
 const reportsList = document.getElementById('reports-list');
 const reportText = document.getElementById('report-text');
-
+const btnGallery = document.getElementById('btn-gallery');
+const galleryInput = document.getElementById('gallery-input');
 loadReports();
 initMap();
 renderReports();
@@ -47,21 +48,16 @@ function initMap() {
 }
 
 
-const btnGallery = document.getElementById('btn-gallery');
-const galleryInput = document.getElementById('gallery-input');
-
 // =====================
 // OBSŁUGA ZDJĘCIA
 // =====================
 
 btnCapture.addEventListener('click', () => {
-    checkInitialPermissions(); 
     cameraInput.click();
 });
 
 
 btnGallery.addEventListener('click', () => {
-    checkInitialPermissions();
     galleryInput.click();
 });
 
@@ -72,9 +68,7 @@ function handleFileSelection(event) {
         console.log('Brak pliku');
         return;
     }
-
     console.log('Plik wybrany:', file.name);
-
     currentPhoto = file;
     const imageURL = URL.createObjectURL(file);
     photoPreview.src = imageURL;
