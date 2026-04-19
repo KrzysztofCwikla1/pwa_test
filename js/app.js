@@ -77,12 +77,20 @@ cameraInput.addEventListener('change', (event) => {
     // pobierz GPS
     getLocation();
 });
+const charCounter = document.getElementById('char-counter');
+const MAX_CHARS = 300;
 reportText.addEventListener('input', (event) => {
   currentReportText = event.target.value.trim();
-
   const length = event.target.value.length;
-
   charCounter.textContent = `${length} / ${MAX_CHARS}`;
+  if (length > 270) {
+    charCounter.classList.add('text-danger');
+    charCounter.classList.remove('text-muted');
+  } else {
+    charCounter.classList.add('text-muted');
+    charCounter.classList.remove('text-danger');
+  }
+
   enableShare();
 });
 
