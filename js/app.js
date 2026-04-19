@@ -86,6 +86,10 @@ galleryInput.addEventListener('change', (event) => {
     getLocation();
     enableShare();
 });
+reportText.addEventListener('input', (e) => {
+    currentReportText = e.target.value;
+    enableShare();
+});
 //GEOLOKALIZACJA
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
