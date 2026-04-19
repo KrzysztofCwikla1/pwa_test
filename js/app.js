@@ -97,6 +97,15 @@ reportText.addEventListener('input', (event) => {
 
   enableShare();
 });
+function resetCharCounter() {
+  const charCounter = document.getElementById('char-counter');
+
+  if (!charCounter) return;
+
+  charCounter.textContent = `0 / 300`;
+  charCounter.classList.remove('text-danger');
+  charCounter.classList.add('text-muted');
+}
 //geolokalizacja
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
@@ -280,6 +289,7 @@ function clearCurrentReport() {
     photoPreview.src = '';
     photoPreview.style.display = 'none';
     reportText.value = '';
+    resetCharCounter();
     locationStatus.textContent = 'Oczekiwanie na sygnał GPS';
 
     enableShare();
