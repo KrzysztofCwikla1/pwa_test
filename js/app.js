@@ -18,7 +18,7 @@ const photoPreview = document.getElementById('photo-preview');
 const locationStatus = document.getElementById('location-status');
 const reportsList = document.getElementById('reports-list');
 const reportText = document.getElementById('report-text');
-
+const galleryInput = document.getElementById('gallery-input');
 loadReports();
 initMap();
 renderReports();
@@ -49,12 +49,15 @@ function initMap() {
 // OBSŁUGA ZDJĘCIA
 // =====================
 
-// 1. Otwieranie menu systemowego
-btnCapture.addEventListener('click', () => {
-    cameraInput.value = null;
+btnCamera.addEventListener('click', () => {
+    cameraInput.setAttribute('capture', 'environment');
     cameraInput.click();
 });
 
+btnGallery.addEventListener('click', () => {
+    cameraInput.removeAttribute('capture');
+    galleryInput.click();
+});
 // 2. Obsługa wybranego pliku
 cameraInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
@@ -66,6 +69,18 @@ cameraInput.addEventListener('change', (event) => {
     photoPreview.style.display = 'block';
 
     getLocation(); // Pobierz GPS (bo zdjęcie z galerii może go nie mieć)
+    enableShare();
+});
+galleryInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    currentPhoto = file;
+    const imageURL = URL.createObjectURL(file);
+    photoPreview.src = imageURL;
+    photoPreview.style.display = 'block';
+
+    getLocation();
     enableShare();
 });
 //GEOLOKALIZACJA
