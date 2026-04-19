@@ -83,7 +83,7 @@ reportText.addEventListener('input', (event) => {
     enableShare();
 });
 
-// Na początku app.js dodaj referencję do modala (zakładając, że masz załadowany JS Bootstrapa)
+//GEOLOKALIZACJA
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
 function getLocation() {
@@ -96,7 +96,6 @@ function getLocation() {
 
     navigator.geolocation.getCurrentPosition(
         (position) => {
-            // Sukces - ukrywamy modal jeśli był otwarty
             locationModal.hide();
             
             const lat = position.coords.latitude;
@@ -111,15 +110,14 @@ function getLocation() {
         (error) => {
             console.error('GPS ERROR:', error);
             
-            // Obsługa różnych kodów błędów
             switch(error.code) {
                 case error.PERMISSION_DENIED:
                     locationStatus.textContent = "Błąd: Odmówiono dostępu do lokalizacji.";
-                    locationModal.show(); // Pokazujemy modal z instrukcją
+                    locationModal.show();
                     break;
                 case error.POSITION_UNAVAILABLE:
                     locationStatus.textContent = "Błąd: Lokalizacja niedostępna (wyłączony GPS?).";
-                    locationModal.show(); // Pokazujemy modal
+                    locationModal.show();
                     break;
                 case error.TIMEOUT:
                     locationStatus.textContent = "Błąd: Przekroczono czas oczekiwania.";
@@ -131,7 +129,7 @@ function getLocation() {
         },
         {
             enableHighAccuracy: true,
-            timeout: 10000, // 10 sekund na złapanie fixa
+            timeout: 10000,
             maximumAge: 0
         }
     );
