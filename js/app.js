@@ -51,6 +51,7 @@ function initMap() {
 
 // 1. Otwieranie menu systemowego
 btnCapture.addEventListener('click', () => {
+    cameraInput.value = null;
     cameraInput.click();
 });
 
