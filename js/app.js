@@ -56,6 +56,7 @@ btnCamera.addEventListener('click', () => {
 });
 
 btnGallery.addEventListener('click', () => {
+    cameraInput.removeAttribute('capture');
     galleryInput.click();
 });
 function handleFile(file) {
