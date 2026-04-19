@@ -71,7 +71,10 @@ function handleFile(file) {
 }
 cameraInput.addEventListener('change', e => handleFile(e.target.files[0]));
 galleryInput.addEventListener('change', e => handleFile(e.target.files[0]));
-
+reportText.addEventListener('input', (e) => {
+    currentReportText = e.target.value;
+    enableShare();
+});
 //GEOLOKALIZACJA
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
