@@ -12,7 +12,8 @@ let reportMarkers = [];
 // INIT
 // =====================
 console.log('APP START');
-const btnCapture = document.getElementById('btn-capture');
+const btnCamera = document.getElementById('btn-camera');
+const btnGallery = document.getElementById('btn-gallery');
 const cameraInput = document.getElementById('camera-input');
 const photoPreview = document.getElementById('photo-preview');
 const locationStatus = document.getElementById('location-status');
