@@ -52,28 +52,16 @@ function initMap() {
 
 btnCamera.addEventListener('click', () => {
     cameraInput.setAttribute('capture', 'environment');
+    cameraInput.value = null;
     cameraInput.click();
 });
 
 btnGallery.addEventListener('click', () => {
     cameraInput.removeAttribute('capture');
-    galleryInput.click();
+    cameraInput.value = null;
+    cameraInput.click();
 });
-// 2. Obsługa wybranego pliku
-cameraInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    currentPhoto = file;
-    const imageURL = URL.createObjectURL(file);
-    photoPreview.src = imageURL;
-    photoPreview.style.display = 'block';
-
-    getLocation(); // Pobierz GPS (bo zdjęcie z galerii może go nie mieć)
-    enableShare();
-});
-galleryInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
+function handleFile(file) {
     if (!file) return;
 
     currentPhoto = file;
@@ -83,7 +71,9 @@ galleryInput.addEventListener('change', (event) => {
 
     getLocation();
     enableShare();
-});
+}
+cameraInput.addEventListener('change', e => handleFile(e.target.files[0]));
+galleryInput.addEventListener('change', e => handleFile(e.target.files[0]));
 reportText.addEventListener('input', (e) => {
     currentReportText = e.target.value;
     enableShare();
