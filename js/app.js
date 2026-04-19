@@ -12,18 +12,19 @@ let reportMarkers = [];
 // INIT
 // =====================
 console.log('APP START');
-const btnCamera = document.getElementById('btn-camera');
-const btnGallery = document.getElementById('btn-gallery');
+
+const btnCapture = document.getElementById('btn-capture');
 const cameraInput = document.getElementById('camera-input');
 const photoPreview = document.getElementById('photo-preview');
 const locationStatus = document.getElementById('location-status');
 const reportsList = document.getElementById('reports-list');
 const reportText = document.getElementById('report-text');
-const galleryInput = document.getElementById('gallery-input');
+
 loadReports();
 initMap();
 renderReports();
 enableShare();
+
 // =====================
 // MAPA STARTOWA
 // =====================
@@ -45,38 +46,47 @@ function initMap() {
     }, 100);
 }
 
-
 // =====================
 // OBSŁUGA ZDJĘCIA
 // =====================
-
-btnCamera.addEventListener('click', () => {
-    cameraInput.setAttribute('capture', 'environment');
+btnCapture.addEventListener('click', () => {
+    console.log('Klik - otwieram aparat');
     cameraInput.click();
 });
 
-btnGallery.addEventListener('click', () => {
-    cameraInput.removeAttribute('capture');
-    galleryInput.click();
-});
-function handleFile(file) {
-    if (!file) return;
+cameraInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
 
+    if (!file) {
+        console.log('Brak pliku');
+        return;
+    }
+
+    console.log('Zdjęcie wybrane:', file);
+
+    // zapis zdjęcia
     currentPhoto = file;
+
+    // preview
     const imageURL = URL.createObjectURL(file);
     photoPreview.src = imageURL;
     photoPreview.style.display = 'block';
 
+    enableShare();
+
+    // pobierz GPS
     getLocation();
-    enableShare();
-}
-cameraInput.addEventListener('change', e => handleFile(e.target.files[0]));
-galleryInput.addEventListener('change', e => handleFile(e.target.files[0]));
-reportText.addEventListener('input', (e) => {
-    currentReportText = e.target.value;
-    enableShare();
 });
-//GEOLOKALIZACJA
+reportText.addEventListener('input', (event) => {
+  currentReportText = event.target.value.trim();
+
+  const length = event.target.value.length;
+
+  charCounter.textContent = `${length} / ${MAX_CHARS}`;
+  enableShare();
+});
+
+//geolokalizacja
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
 function getLocation() {
@@ -102,15 +112,14 @@ function getLocation() {
         },
         (error) => {
             console.error('GPS ERROR:', error);
-            
             switch(error.code) {
                 case error.PERMISSION_DENIED:
                     locationStatus.textContent = "Błąd: Odmówiono dostępu do lokalizacji.";
-                    locationModal.show();
+                    locationModal.show(); 
                     break;
                 case error.POSITION_UNAVAILABLE:
                     locationStatus.textContent = "Błąd: Lokalizacja niedostępna (wyłączony GPS?).";
-                    locationModal.show();
+                    locationModal.show(); 
                     break;
                 case error.TIMEOUT:
                     locationStatus.textContent = "Błąd: Przekroczono czas oczekiwania.";
