@@ -46,15 +46,26 @@ function initMap() {
     }, 100);
 }
 
+
+const btnGallery = document.getElementById('btn-gallery');
+const galleryInput = document.getElementById('gallery-input');
+
 // =====================
 // OBSŁUGA ZDJĘCIA
 // =====================
+
 btnCapture.addEventListener('click', () => {
-    console.log('Klik - otwieram aparat');
+    checkInitialPermissions(); 
     cameraInput.click();
 });
 
-cameraInput.addEventListener('change', (event) => {
+
+btnGallery.addEventListener('click', () => {
+    checkInitialPermissions();
+    galleryInput.click();
+});
+
+function handleFileSelection(event) {
     const file = event.target.files[0];
 
     if (!file) {
@@ -62,26 +73,18 @@ cameraInput.addEventListener('change', (event) => {
         return;
     }
 
-    console.log('Zdjęcie wybrane:', file);
+    console.log('Plik wybrany:', file.name);
 
-    // zapis zdjęcia
     currentPhoto = file;
-
-    // preview
     const imageURL = URL.createObjectURL(file);
     photoPreview.src = imageURL;
     photoPreview.style.display = 'block';
 
     enableShare();
-
-    // pobierz GPS
     getLocation();
-});
-
-reportText.addEventListener('input', (event) => {
-    currentReportText = event.target.value.trim();
-    enableShare();
-});
+}
+cameraInput.addEventListener('change', handleFileSelection);
+galleryInput.addEventListener('change', handleFileSelection);
 
 //GEOLOKALIZACJA
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
