@@ -86,7 +86,6 @@ reportText.addEventListener('input', (event) => {
 
   charCounter.textContent = `${length} / ${MAX_CHARS}`;
 
-  // kolorowanie zależnie od limitu
   if (length > 270) {
     charCounter.classList.add('text-danger');
     charCounter.classList.remove('text-muted');
