@@ -52,14 +52,11 @@ function initMap() {
 
 btnCamera.addEventListener('click', () => {
     cameraInput.setAttribute('capture', 'environment');
-    cameraInput.value = null;
     cameraInput.click();
 });
 
 btnGallery.addEventListener('click', () => {
-    cameraInput.removeAttribute('capture');
-    cameraInput.value = null;
-    cameraInput.click();
+    galleryInput.click();
 });
 function handleFile(file) {
     if (!file) return;
