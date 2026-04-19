@@ -12,7 +12,6 @@ let reportMarkers = [];
 // INIT
 // =====================
 console.log('APP START');
-
 const btnCapture = document.getElementById('btn-capture');
 const cameraInput = document.getElementById('camera-input');
 const photoPreview = document.getElementById('photo-preview');
@@ -25,7 +24,10 @@ loadReports();
 initMap();
 renderReports();
 enableShare();
-
+reportText.addEventListener('input', () => {
+    currentReportText = reportText.value;
+    enableShare(); // Odśwież stan przycisku udostępniania
+});
 // =====================
 // MAPA STARTOWA
 // =====================
@@ -73,7 +75,7 @@ function handleFileSelection(event) {
     const imageURL = URL.createObjectURL(file);
     photoPreview.src = imageURL;
     photoPreview.style.display = 'block';
-
+    currentReportText = reportText.value;
     enableShare();
     getLocation();
 }
