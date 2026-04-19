@@ -51,11 +51,13 @@ function initMap() {
 
 btnCamera.addEventListener('click', () => {
     cameraInput.setAttribute('capture', 'environment');
+    cameraInput.value = null;
     cameraInput.click();
 });
 
 btnGallery.addEventListener('click', () => {
     cameraInput.removeAttribute('capture');
+    cameraInput.value = null;
     galleryInput.click();
 });
 // 2. Obsługa wybranego pliku
