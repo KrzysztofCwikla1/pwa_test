@@ -18,16 +18,11 @@ const photoPreview = document.getElementById('photo-preview');
 const locationStatus = document.getElementById('location-status');
 const reportsList = document.getElementById('reports-list');
 const reportText = document.getElementById('report-text');
-const btnGallery = document.getElementById('btn-gallery');
-const galleryInput = document.getElementById('gallery-input');
+
 loadReports();
 initMap();
 renderReports();
 enableShare();
-reportText.addEventListener('input', () => {
-    currentReportText = reportText.value;
-    enableShare(); // Odśwież stan przycisku udostępniania
-});
 // =====================
 // MAPA STARTOWA
 // =====================
@@ -54,34 +49,24 @@ function initMap() {
 // OBSŁUGA ZDJĘCIA
 // =====================
 
+// 1. Otwieranie menu systemowego
 btnCapture.addEventListener('click', () => {
     cameraInput.click();
 });
 
-
-btnGallery.addEventListener('click', () => {
-    galleryInput.click();
-});
-
-function handleFileSelection(event) {
+// 2. Obsługa wybranego pliku
+cameraInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
+    if (!file) return;
 
-    if (!file) {
-        console.log('Brak pliku');
-        return;
-    }
-    console.log('Plik wybrany:', file.name);
     currentPhoto = file;
     const imageURL = URL.createObjectURL(file);
     photoPreview.src = imageURL;
     photoPreview.style.display = 'block';
-    currentReportText = reportText.value;
-    enableShare();
-    getLocation();
-}
-cameraInput.addEventListener('change', handleFileSelection);
-galleryInput.addEventListener('change', handleFileSelection);
 
+    getLocation(); // Pobierz GPS (bo zdjęcie z galerii może go nie mieć)
+    enableShare();
+});
 //GEOLOKALIZACJA
 const locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
 
